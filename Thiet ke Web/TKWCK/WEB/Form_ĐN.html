@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập</title>
+    <link rel="stylesheet" href="./Form_ĐN.css">
+    <link rel="stylesheet" href="./Trang chủ.html">
+</head>
+
+<body>
+    <script src="./form_ĐN.js"></script>
+    <div id="div_header">
+        <div id="div_content_header">
+            <div style="display:flex;">
+                <a href="./Trang chủ.html">
+                    <img src="./background_logo.jpg" alt="logo">
+                </a>
+                <div id="tc" style="display: flex; align-items: center; margin-left: 40px; color: rgb(159, 7, 7);font-size: 20px;">
+                    <h2>Trang Chủ</h2>
+                </div>
+            </div>
+            <a href="#">
+                <h3 style="font-size: 30px;">Cần trợ giúp ?</h3>
+            </a>
+        </div>
+    </div>
+
+     <div id="div_forms_dn">
+        <div id="form_dn" class="form1">
+            <h3 style="margin: 70px auto 20px; font-size: 30px;">Đăng Nhập</h3>
+            <form id="form-login">
+                <div>
+                    <input id="username" type="text" placeholder=" Nhập tên đăng nhập">
+                </div>
+                <div>
+                    <input id="password" type="password" placeholder=" Nhập mật khẩu">
+                </div>
+                <div>
+                    <input id="check-save" class="form-check-input" type="checkbox">
+                    <label class="form-check-save" for="check-save" style="font-size: 17px;">Nhớ mật khẩu</label>
+                </div>
+                <input id="button_dn" class="btn-submit" type="button" value="Đăng Nhập" style="font-size: 22px;" onclick="kiemtra_ĐN()">
+            </form>
+            <a class="forgot-password" href="#" style="color: #fff;" onclick=""><b>Quên mật khẩu?</b></a>
+            <class class="sign-up" style="color: black">
+                Chưa có tài khoản đăng ký
+                <a class="ĐK_user" href="./Form_ĐK.html" style="color: #fff;"><b>Tại đây</b></a>
+            </class>
+        </div>
+    </div>
+</body>
+
+</html> 

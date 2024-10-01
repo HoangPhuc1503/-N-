@@ -1,0 +1,81 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+#div_header {
+    height: 115px;
+    display: flex; 
+    align-items: center;
+}
+
+#div_content_header {
+    width: 75%;
+    margin: 0px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+ #div_forms_dn {
+    background-size: cover;
+    height: 630px;
+ }
+
+.form1 {
+    width: 500px;
+    height: 500px;
+    margin-left: 1200px;
+    text-align: center;
+    background-color: rgb(22, 213, 102);
+    position: absolute;
+    top: 150px;
+    right: 400px;
+    border-radius: 7px;
+    box-shadow: 0px 1px 5px 5px #ccc;
+}
+
+ #username {
+    width: 400px;
+    margin: 20px 50px;
+    height: 40px;
+}
+
+#password {
+    width: 400px;
+    margin: 20px 50px;
+    height: 40px;
+}
+
+#username:focus,
+#password:focus {
+    background-color: #ccc;
+}
+
+#button_dn {
+    width: 370px;
+    margin: 20px 50px 30px;
+    height: 50px;
+    background-color: rgb(172, 171, 171);
+}
+
+#button_dn:hover,
+img:hover {
+    opacity: 0.9;
+}
+
+a {
+    color: rgb(159, 7, 7);
+    text-decoration: none;
+}
+
+a:hover {
+    color: orangered;
+}
+
+.forgot-password:hover,
+.ĐK_user:hover {
+    opacity: 0.6;
+}  
