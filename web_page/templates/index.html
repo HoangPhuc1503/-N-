@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ url_for('static', path='assets/favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='assets/fonts/themify-icons/themify-icons.css') }}">
+    <title>Trang chủ</title>
+</head>
+<body>
+    <div id="header">
+        <div class="header">
+            <div class="header-logo">
+                <img class="logoimg" src="{{ url_for('static', path='assets/logo.png') }}" alt="">
+            </div>
+            <div class="header-content">
+                <div class="header-content-top">
+                    <div class="header-content-top-left">
+                        <h2 class="white">Đại học đà nẵng</h2>
+                        <h2 style="color: #DA5B5B;">Trường Đại Học Sư Phạm Kỹ Thuật</h2>
+                        <h3 class="white">Hệ thống quản lý văn bản việc ban hành văn bản</h3>
+                    </div>
+                    <div class="header-content-top-right white">
+                        <div class="box-username">
+                            <label class="label-username">Xin chào </label>
+                            <span id="user-name" class="user-name">{{ canbo.HoTen }}</span>
+                            <span class="id-canbo" style="display: none;">{{ canbo.idCanBo }}</span>
+                        </div>
+                        <a class="notification" href="">
+                            <i class="ti-bell white"></i>
+                            <span class="quantity-noti">10</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="header-content-bottom">
+                    <div class="header-content-bottom-nav">
+                        <a class="color-nav" href="/hethong?id={{ canbo.idCanBo }}">Trang chủ</a>
+                        <a class="white" href="/hethong/thongtincanhan?id={{ canbo.idCanBo }}">Thông tin cá nhân</a>
+                        {% if canbo.QuyenTruyCap == "Quản trị viên"  %}
+                            <a class="white" href="/phanquyen?id={{ canbo.idCanBo }}">Phân quyền</a>
+                        {% elif canbo.QuyenTruyCap == "Lãnh đạo"  %}
+                            <a class="white" href="#">Tạo văn bản</a>
+                        {% endif %}
+                        <a class="white" href="#">Thống kê</a>
+                    </div>
+                    <a id="auth-link" class="header-content-bottom-user" href="/login">
+                        <img src="{{ url_for('static', path='assets/icon_user.png') }}" alt="">
+                        <p id="auth-name" class="label-login white">Đăng nhập</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="content">
+        <div class="content">
+            <div class="left-content">
+                <div class="left-content-nav">
+                    <div class="left-content-nav-title">
+                        <h3 class="white">Menu</h3>
+                    </div>
+                    <div class="left-content-nav-item">
+                        <a class="white" href="/hethong/vanbandi?id={{ canbo.idCanBo }}&page=1"><li class="white">Quản lý văn bản đi</li></a>
+                        <a class="white" href="/hethong/vanbanden?id={{ canbo.idCanBo }}&page=1"><li class="white">Quản lý văn bản đến</li></a>
+                        <a class="white" href=""><li class="white">Đăng ký văn bản đi</li></a>
+                        <a class="white" href=""><li class="white">Xem lịch sử</li></a>
+                        <a class="white" href=""><li class="white">Phân công xử lý</li></a>
+                    </div>
+                </div>
+            </div>
+            <div class="right-content">
+                <div class="right-content-title">
+                    <i class="ti-link white"></i>
+                    <h4 class="white">Trang chủ</h4>
+                </div>
+                <div class="right-content-form">
+                    <!-- <div class="backgroundHome" style="background-image: url('../static/images/backgroundHome.jpg');"></div> -->
+                    <img src="{{ url_for('static', path='images/backgroundHome.jpg') }}" alt="" class="backgroundHome">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', path='scripts/checkLogin.js') }}"></script>
+    <script src="{{ url_for('static', path='scripts/setbtnLoginLogout.js') }}"></script>
+</body>
+</html>

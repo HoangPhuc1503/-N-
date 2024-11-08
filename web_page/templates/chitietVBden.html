@@ -1,0 +1,304 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{url_for('static', path='assets/favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/chitietVBden.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='assets/fonts/themify-icons/themify-icons.css') }}">
+    <title>Chi tiết văn đến</title>
+</head>
+<body>
+    <div id="main">
+        <div id="header">
+            <div class="header">
+                <div class="header-logo">
+                    <img class="logoimg" src="{{ url_for('static', path='assets/logo.png') }}" alt="">
+                </div>
+                <div class="header-content">
+                    <div class="header-content-top">
+                        <div class="header-content-top-left">
+                            <h2 class="white">Đại học đà nẵng</h2>
+                            <h2 style="color: #DA5B5B;">Trường Đại Học Sư Phạm Kỹ Thuật</h2>
+                            <h3 class="white">Hệ thống quản lý văn bản việc ban hành văn bản</h3>
+                        </div>
+                        <div class="header-content-top-right white">
+                            <div class="box-username">
+                                <!-- <label class="label-username">Xin chào </label> -->
+                                <span id="user-name" class="user-name">{{ canbo.HoTen }}</span>
+                                <span class="id-canbo" style="display: none;">{{ canbo.idCanBo }}</span>
+                            </div>
+                            <a class="notification" href="">
+                                <i class="ti-bell white"></i>
+                                <span class="quantity-noti">10</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="header-content-bottom">
+                        <div class="header-content-bottom-nav">
+                            <a class="white" href="/hethong?id={{ canbo.idCanBo }}">Trang chủ</a>
+                            <a class="white" href="/hethong/thongtincanhan?id={{ canbo.idCanBo }}">Thông tin cá nhân</a>
+                            {% if canbo.QuyenTruyCap == "Quản trị viên"  %}
+                            <a class="white" href="/phanquyen?id={{ canbo.idCanBo }}">Phân quyền</a>
+                            {% elif canbo.QuyenTruyCap == "Lãnh đạo"  %}
+                                <a class="white" href="#">Tạo văn bản</a>
+                            {% endif %}
+                            <a class="white" href="#">Thống kê</a>
+                        </div>
+                        <a id="auth-link" class="header-content-bottom-user" href="/login">
+                            <img src="{{ url_for('static', path='assets/icon_user.png') }}" alt="">
+                            <p id="auth-name" class="label-login white">Đăng Xuất</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="search">
+            <div class="search-box">
+                <i class="ti-search"></i>
+                <input id="input-search" class="input-search" type="text" placeholder="Từ khoá tìm kiếm">
+            </div>
+        </div>
+        <div id="content">
+            <div class="content">
+                <div class="left-content">
+                    <div class="left-content-nav">
+                        <div class="left-content-nav-title">
+                            <h3 class="white">Menu</h3>
+                        </div>
+                        <div class="left-content-nav-item">
+                            <a class="white" href="/hethong/vanbandi?id={{ canbo.idCanBo }}" ><li class="white">Quản lý văn bản đi</li></a>
+                            <a class="white" href="/hethong/vanbanden?id={{ canbo.idCanBo }}"style="background-color: #616469;"><li class="white">Quản lý văn bản đến</li></a>
+                            <a class="white" href=""><li class="white">Đăng ký văn bản đi</li></a>
+                            <a class="white" href=""><li class="white">Xem lịch sử</li></a>
+                            <a class="white" href=""><li class="white">Phân công xử lý</li></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-content">
+                    <div class="right-content-title">
+                        <i class="ti-link white"></i>
+                        <h3 class="white">Quản lý văn bản đến</h2>
+                    </div>
+                    <div class="right-content-form">
+                        <div class="right-content-form-top">
+                            <div class="right-content-form-title">
+                                <i class="ti-info"></i>
+                                <h5>Chi tiết văn bản đến</h5>
+                            </div>
+                            <a class="right-content-form-btn"  href="/hethong/vanbanden?id={{ canbo.idCanBo }}">
+                                <h5>Quay lại</h5>
+                                <i class="ti-back-left" style="font-weight: bold;"></i>
+                            </a>
+                        </div>
+                        <div class="right-content-form-center">
+
+                            <div class="form-chitietvb flex-row">
+                                <div class="form-chitietvb-left flex-col">
+                                    <div class="form-item-box-content" style="align-items: start;">
+                                        <label>Trích yếu: </label>
+                                        <span class="input ip-trichyeu">{{ chitietVbDen.TrichYeu }}</span>
+                                    </div>
+                                    <div class="form-item-box-content">
+                                        <label>Hình thức: </label>
+                                        <span class="input ip-hinhthuc">{{ chitietVbDen.HinhThuc }}</span>
+                                    </div>
+                                    <div class="flex-row" style="gap: 50px;">
+                                        <div class="form-item-box-content">
+                                            <label>Đơn vị ban hành: </label>
+                                            <span class="input ip-donvibanhanh">{{ chitietVbDen.DonViBanHanh }}</span>
+                                        </div>
+                                        <div class="form-item-box-content">
+                                            <label style="min-width: 60px;">Số đến: </label>
+                                            <span class="input ip-soden">{{ chitietVbDen.Soden }}</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-item-box-content">
+                                        <label>Lĩnh vực: </label>
+                                        <span class="input ip-linhvuc">{{ chitietVbDen.LinhVuc }}</span>
+                                    </div>
+
+                                    <div class="form-item-box-content">
+                                        <label>Tính chất văn bản: </label>
+                                        <span class="input ip-tinhchatvanban">{{ chitietVbDen.TinhChatVB }}</span>
+                                    </div>
+
+                                    <div class="form-item-box-content">
+                                        <label>Khoa: </label>
+                                        <span class="input ip-khoa">{{ chitietVbDen.Khoa }}</span>
+                                    </div>
+                                    <div class="form-item-box-content">
+                                        <label>Người nhập: </label>
+                                        <span class="input ip-nguoinhap">{{ chitietVbDen.NguoiTao }}</span>
+                                    </div>
+                                    <div class="form-item-box-content">
+                                        <label>Cần trả lời văn bản đến: </label>
+                                        <span class="input ip-cantraloi">{{ chitietVbDen.CanTraLoiVB }}</span>
+                                    </div>
+                                    <div class="form-item-box-content">
+                                        <label>Văn bản cần phải xử lý: </label>
+                                        <span class="input ip-canxuly">{{ chitietVbDen.CanXyLyVB }}</span>
+                                    </div>
+
+                                </div>
+                                <div class="form-chitietvb-right flex-col">
+                                    <div class="form-item-box-content">
+                                        <label>Ngày đến: </label>
+                                        <span class="input ip-ngayden">{{ chitietVbDen.NgayDen }}</span>
+                                    </div>
+                                    <div class="form-item-box-content">
+                                        <label>Ngày ban hành: </label>
+                                        <span class="input ip-ngaybanhanh">{{ chitietVbDen.NgayBanHanh }}</span>
+                                    </div>
+                                    <div class="form-item-box-content">
+                                        <label>Số/Ký hiệu </label>
+                                        <span class="input ip-sokyhieu">{{ chitietVbDen.SoKyHieu }}</span>
+                                    </div>
+                                    <div class="form-item-box-content">
+                                        <label>Cán bộ duyệt: </label>
+                                        <span class="input ip-canboduyet">{{ chitietVbDen.NguoiPheDuyet }}</span>
+                                    </div>
+                                    <div class="form-item-box-content">
+                                        <label>Độ khẩn: </label>
+                                        <span class="input ip-dokhan">{{ chitietVbDen.DoKhanCap }}</span>
+                                    </div>
+                                    <div class="form-item-box-content">
+                                        <label>Loại văn bản: </label>
+                                        <span class="input ip-loaivanban">{{ chitietVbDen.LoaiVanBan }}</span>
+                                    </div>
+                                    <div class="form-item-box-content">
+                                        <label>Han trả lời: </label>
+                                        <span class="input ip-hantraloi">{{ chitietVbDen.HanTraLoi }}</span>
+                                    </div>
+                                    <div class="form-item-box-content">
+                                        <label>Số ngày: </label>
+                                        <span class="input ip-songay">{{ chitietVbDen.SoNgay }}</span>
+                                    </div>
+                                    <div class="form-item-box-content">
+                                        <label>Trang thái văn bản: </label>
+                                        <span class="input ip-loaivanban">{{ chitietVbDen.TrangThaiXuLy }}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-chitietvb-functions flex-row">
+                                <button onclick="downloadFile('{{ chitietVbDen.LinkFileVanBan }}')" class="white"><i class="ti-eye" style="margin-bottom: 2px;"></i> Xem chi tiết </button>
+                                <!-- <button><i class="ti-back-left"></i> Trả lại văn thư</button> -->
+                                {% if canbo.ChucVu == "Lãnh đạo" %} 
+                                    {% if chitietVbDen.TrangThaiXuLy != "Đã phê duyệt" or chitietVbDen.TrangThaiXuLy != "Phối hợp xử lý"  %}
+                                    <button class="btn-share-modal white"><i class="ti-share" style="margin-bottom: 2px;"></i> Chuyển lãnh đạo khác</button>
+                                    <button class="white"><i class="ti-check" style="margin-bottom: 2px;"></i> Duyệt</button>
+                                    {% endif %}
+                                {% endif %}
+                                <button class="white"><i class="ti-save" style="margin-bottom: 2px;"></i> Lưu vào HSCV</button>
+                                
+                            </div>
+                        </div>
+
+                        {% if butpheVBden %}
+                        <div class="right-content-form-footer">
+                            <div class="right-content-form-footer-title flex-row">
+                                <i class="ti-ink-pen white"></i>
+                                <h3 class="white" style="margin-top: 1px;">Bút phê lãnh đạo</h3>
+                            </div>
+                            
+                            <div class="right-content-form-footer-history flex-col">
+                                {% for item in butpheVBden %}
+                                    <div class="history-box flex-col" style="gap: 5px;">
+                                        <span class="history-name-chucvu-phongban-date" style="font-size: 16px;font-weight: bold;color: #434447;">
+                                            {{ item.TenNguoiChuyen }} - {{ item.TenChucVuNC }} - {{ item.TenPhongBanNC }} <strong style="color: rgb(53, 149, 245);font-style: italic;">({{ item.ThoiGianChuyen }})</strong>
+                                            <!-- Văn thư - Phòng hành chính - Lưu trữ (19/04/2024 9:01:20) -->
+                                        </span>
+                                        <div class="flex-row" style="gap: 10px;">
+                                            <label style="text-decoration: underline;font-size: 15px;font-weight: bold;">Chuyển:</label>
+                                            <span class="history-name-chucvu-phongban" style="font-size: 15px;margin-top: 1px;">
+                                                {{ item.TenNguoiNhan }} - {{ item.TenChucVuNN }} - {{ item.TenPhongBanNN }}  <span style="color: red;font-style: italic;font-weight: bold;">{{ item.YKienChuyen }}</span>
+                                                <!-- Lãnh đạo - Văn phòng A (Nguyễn Văn A) -->
+                                            </span>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form class="modal js-modal" id-vanban = "{{ chitietVbDen.idVanBanDen }}">
+        <div class="modal-container">
+            <header class="modal-header">
+                <div class="modal-title">
+                    Chuyển lãnh đạo phê duyệt
+                </div>
+                
+                <div class="modal-close js-modal-close">
+                    <i class="ti-close"></i>
+                </div>
+            </header>
+            <div class="modal-body">
+                <div class="modal-body-box">
+                    <label>Chuyển đến <span style="color: red;">{*}</span></label>
+                    <select name="lanhdao" class="input id-nguoinhan">
+                        {% for item in option_lanhdao %}
+                            {% if item.idCanBo != canbo.idCanBo %}
+                                {% if item.QuyenTruyCap == "Lãnh đạo" %}
+                                <option class="form-option" id-nguoinhan ="{{ item.idCanBo }}" value="{{ item.HoTen }}" {% if loop.first %} selected {% endif %}>{{ item.HoTen }} - Lãnh đạo - {{ item.TenPhongBan }}</option>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="modal-body-box">
+                    <label>Ý kiến chuyển</label>
+                    <textarea class="input ip-note" type="text" style="height: 75px;"></textarea>
+                </div>
+            </div>
+            <footer class="modal-footer">
+                <button class="btn-share white" onclick="VBDenShare()"><i class="ti-share" style="margin-bottom: 3px;"></i>Chuyển</button>
+            </footer>
+        </div>
+    </form>
+    <script>
+        const shareBtns = document.querySelectorAll('.btn-share-modal')
+        
+        const modal = document.querySelector('.js-modal')
+        const modalContainer = document.querySelector('.modal-container')
+        const modalClose = document.querySelector('.js-modal-close')
+        function showShareDuyet(){
+            modal.classList.add('js-modal-open')
+        }
+        function closeShareDuyet(){
+            modal.classList.remove('js-modal-open')
+        }
+
+        for (const btn of shareBtns){
+            btn.addEventListener('click', showShareDuyet)
+            
+        }
+        modalClose.addEventListener('click', closeShareDuyet)
+
+        modal.addEventListener('click', closeShareDuyet)
+
+        modalContainer.addEventListener('click', function(event){
+            event.stopPropagation()
+        })
+    </script>
+
+    <script>
+        function downloadFile(fileUrl) {
+            window.location.href = "/dowloadfile/" + fileUrl;
+        }
+    </script>
+    <script src="{{ url_for('static', path='scripts/checkLogin.js') }}"></script>
+    <script src="{{ url_for('static', path='scripts/setbtnLoginLogout.js') }}"></script>
+
+    <!-- <script src="{{ url_for('static', path='scripts/customDate.js') }}"></script> -->
+    <script src="{{ url_for('static', path='scripts/btnShare.js') }}"></script>
+    
+
+</body>
+</html>

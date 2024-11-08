@@ -1,0 +1,491 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body{
+    height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.color-nav{
+    color: #DA5B5B;
+}
+.white{
+    color: #fff;
+}
+.black{
+    color: #000;
+}
+.user-name{
+    color: #00fff8;
+}
+
+#header{
+    /* position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999; */
+    background-color: #2A446E;
+    height: 174px;
+    min-width: 1150px;
+}
+
+.header{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 30px;
+    padding: 10px 50px;
+}
+.header-logo{
+    margin: auto;
+}
+.header-logo .logoimg{
+    width: 145px;
+    height: 145px;
+}
+.header-content{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5px 0px;
+    gap: 25px;
+}
+.header-content-top{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.header-content-top .header-content-top-left{
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    text-transform: uppercase;
+}
+
+.header-content-top-left h2{
+    font-size: 20px;
+}
+.header-content-top-left h3{
+    font-size: 16px;
+}
+
+.header-content-top-right{
+    position: relative;
+    margin-right: 5px;
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    font-weight: bold;
+    align-items: flex-start;
+
+}
+.header-content-top-right .box-username{
+    margin-top: 8px;
+}
+
+.header-content-top-right i{
+    font-size: 33px;
+}
+
+.header-content-top-right .quantity-noti{
+    position: absolute;
+    padding: 3px;
+    top: -6px;
+    right: -6px;
+    font-size: 13px;
+    border-radius: 50px;
+    background-color: antiquewhite;
+    color: #ff5c00;
+    font-weight: bold;
+    
+}
+.header-content-top-right .notification{
+    text-decoration: none;
+}
+
+.header-content-bottom{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between; 
+}
+
+.header-content-bottom-nav {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    gap: 40px;
+    justify-content: space-evenly;
+}
+.header-content-bottom-nav a:hover{
+    color: #DA5B5B;
+}
+.header-content-bottom div a{
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 17px;
+    margin-top: 2px;
+}
+.header-content-bottom-user{
+    display: flex;
+    width: 170px;
+    flex-direction: row;
+    align-items: center;
+    gap: 9px;
+    background-color: rgb(255, 132, 0);
+    border-radius: 20px;
+    padding: 4px 7px;
+    text-decoration: none;
+}
+
+.header-content-bottom-user:hover{
+    opacity: 0.6;
+}
+
+.header-content-bottom-user p{
+    margin-top: 2px;
+    font-weight: bold;
+}
+#search{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    height: 50px;
+    padding: 10px 50px;
+    background-color: #BBB;
+    min-width: 1150px;
+    /* margin-top: 174px; */
+}
+.search-box{
+    /* position: relative; */
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    width: 350px;
+    gap: 10px;
+    background-color: #fff;
+    padding: 0 10px;
+    border-radius: 15px;
+}
+.search-box .input-search{
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    margin-top: 2px;
+    color: #3b3b3b;
+}
+
+
+#content{
+    /* padding: 20px 50px 10px; */
+    background-color: #EBF1F6;
+    min-width: 1150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.content{
+    display: flex;
+}
+
+
+
+
+.content_child {
+    margin-top: 0.5rem;
+    min-width: 1000px;
+}
+
+.content_child .content_top{
+    padding: 0.5rem 0;
+    font-size: 1.2rem ;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    background-color: #70A0CB;
+    width: 250px;
+    min-width: 250px;
+    color:white;
+    font-weight: 600; 
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+
+.content_child .content_bottom{
+    background-color: white;
+    padding: 3.5rem 60px;
+    display: flex;
+    min-width: 1000px;
+    gap: 69px;
+    flex-direction: row;
+}
+
+.content_bottom_left{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.position{
+    display: inline;
+    width: 100%;
+    height: auto;
+    /* background-color: #D9D9D9; */
+    padding: 0.6rem;
+    font-weight: bold;
+}
+
+.name{
+    display: flex;
+    padding-top:1rem;
+    padding-bottom:1rem;
+    flex-wrap: wrap;
+    
+}
+.name p{
+    font-size: 1.2rem;
+    margin-top: 0.25rem;
+}
+
+.name .name_input{
+   width: 15rem;
+   height: 2rem;
+   /* margin-left: 1rem; */
+   font-size: 1rem;
+   border: 0.15rem solid black;
+   border-radius: 0.5rem;
+   padding-left:1rem;
+}
+.name_input::placeholder {
+    color: black;
+}
+
+
+.gender input{
+   margin-left: 1.4rem;
+   
+}
+.gender label{
+    font-size: 1.2rem;
+    margin-left: 0.3rem;
+}
+.gender p{
+    font-size: 1.2rem;
+    margin-right: 4.4rem;
+    
+}
+
+
+.CCCD p{
+    font-size: 1.2rem;
+    margin-top: 0.25rem;
+}
+
+.CCCD .CCCD_input{
+   width: 15rem;
+   height: 2rem;
+   /* margin-left: 2.6rem; */
+   font-size: 1rem;
+   border: 0.15rem solid black;
+   border-radius: 0.5rem;
+   padding-left:1rem;
+}
+.CCCD_input::placeholder {
+    color: black;
+}
+.Unit p{
+    font-size: 1.2rem;
+    margin-top: 0.25rem;
+}
+
+.Unit .Unit_input{
+   width: 15rem;
+   height: 2rem;
+   /* margin-left: 2.6rem; */
+   font-size: 1rem;
+   border: 0.15rem solid black;
+   border-radius: 0.5rem;
+   text-align: center;
+   background-color: #ebebeb;
+   pointer-events: none; /* Không cho phép tương tác */
+   user-select: none; /* Ngăn chặn việc chọn văn bản bên trong input */
+}
+.Unit_input::placeholder {
+    color: black;
+}
+.Department{
+    display: flex;
+    padding-top:1rem;
+    padding-bottom:1rem;
+    flex-wrap: wrap;
+    
+}
+.Department p{
+    font-size: 1.2rem;
+    margin-top: 0.25rem;
+}
+
+.Department .Department_cb{
+   width: 15rem;
+   height: 2rem;
+   margin-left: 0.4rem;
+   font-size: 1rem;
+   border: 0.15rem solid black;
+   border-radius: 0.5rem;
+   text-align: center;
+}
+
+
+.content_bottom_right{
+    margin-top: 2.4rem;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+
+.name,
+.gender,
+.Phone_number,
+.Email,
+.Address,
+.Introduce,
+.Unit,
+.CCCD,
+.Phongban{
+    display: flex;
+    padding-top:1rem;
+    padding-bottom:1rem;
+    flex-direction: row;
+    gap: 15px;
+    
+}
+.gender{
+    gap: 10px;
+}
+.Phone_number p{
+    font-size: 1.2rem;
+    margin-top: 0.25rem;
+}
+
+.Phone_number .Phonenumber_input{
+   width: 15rem;
+   height: 2rem;
+   /* margin-left: 1rem; */
+   font-size: 1rem;
+   border: 0.15rem solid black;
+   border-radius: 0.5rem;
+   padding-left:1rem;
+}
+.Phonenumber_input::placeholder {
+    color: black;
+}
+
+
+
+.Email p{
+    font-size: 1.2rem;
+    margin-top: 0.25rem;
+}
+
+.Email .Email_input{
+   width: 15rem;
+   height: 2rem;
+   /* margin-left: 5rem; */
+   font-size: 1rem;
+   border: 0.15rem solid black;
+   border-radius: 0.5rem;
+   padding-left:1rem;
+}
+.Email_input::placeholder {
+    color: black;
+}
+
+.Address p{
+    font-size: 1.2rem;
+    margin-top: 0.25rem;
+}
+
+.Address .Address_input{
+   width: 15rem;
+   height: 2rem;
+   /* margin-left: 4.3rem; */
+   font-size: 1rem;
+   border: 0.15rem solid black;
+   border-radius: 0.5rem;
+   padding: 0px 10px;
+}
+.Address_input::placeholder {
+    color: black;
+}
+
+.Introduce p{
+    font-size: 1.2rem;
+    margin-top: 0.25rem;
+}
+
+.Introduce .Introduce_input{
+   width: 15rem;
+   height: 5.7rem;
+   /* margin-left: 2.8rem; */
+   font-size: 1rem;
+   border: 0.15rem solid black;
+   border-radius: 0.5rem;
+   padding: 0px 10px;
+
+}
+.Introduce_input::placeholder {
+    color: black;
+}
+
+
+
+
+
+.custom_button {
+    width: 10rem;
+    height: 3rem;
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 5px;
+    color: #fff;
+    background-color: #2A446E;
+    border: none;
+    border-radius: 2rem;;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.custom_button:hover {
+    background-color: #0056b3;
+}
+
+
+
+.header-content-top-right .notification{
+    text-decoration: none;
+}
+
+
+.Phongban{
+    width: 15rem;
+    height: 2rem;
+    margin-left: 1rem;
+    font-size: 1rem;
+    border: 0.15rem solid black;
+    border-radius: 0.5rem;
+    padding-left: 1rem;
+    background-color: #ebebeb;
+    text-align: center;
+}

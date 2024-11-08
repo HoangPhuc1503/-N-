@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./static/assets/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/themmoivanbanden.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='assets/fonts/themify-icons/themify-icons.css') }}">
+    <!-- lịch -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <title>Thêm mới văn bản đến</title>
+</head>
+<body>
+    <div id="main">
+        <div id="header">
+            <div class="header">
+                <div class="header-logo">
+                    <img class="logoimg" src="{{ url_for('static', path='assets/logo.png') }}" alt="">
+                </div>
+                <div class="header-content">
+                    <div class="header-content-top">
+                        <div class="header-content-top-left">
+                            <h2 class="white">Đại học đà nẵng</h2>
+                            <h2 style="color: #DA5B5B;">Trường Đại Học Sư Phạm Kỹ Thuật</h2>
+                            <h3 class="white">Hệ thống quản lý văn bản việc ban hành văn bản</h3>
+                        </div>
+                        <div class="header-content-top-right white">
+                            <div class="box-username">
+                                <!-- <label class="label-username">Xin chào </label> -->
+                                <span id="user-name" class="user-name">{{ canbo.HoTen }}</span>
+                                <span class="id-canbo" style="display: none;">{{ canbo.idCanBo }}</span>
+                            </div>
+                            <a class="notification" href="">
+                                <i class="ti-bell white"></i>
+                                <span class="quantity-noti">10</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="header-content-bottom">
+                        <div class="header-content-bottom-nav">
+                            <a class="white" href="/hethong?id={{ canbo.idCanBo }}">Trang chủ</a>
+                            <a class="white" href="/hethong/thongtincanhan?id={{ canbo.idCanBo }}">Thông tin cá nhân</a>
+                            {% if canbo.QuyenTruyCap == "Quản trị viên"  %}
+                            <a class="white" href="/phanquyen?id={{ canbo.idCanBo }}">Phân quyền</a>
+                            {% elif canbo.QuyenTruyCap == "Lãnh đạo"  %}
+                                <a class="white" href="#">Tạo văn bản</a>
+                            {% endif %}
+                            <a class="white" href="#">Thống kê</a>
+                        </div>
+                        <a id="auth-link" class="header-content-bottom-user" href="/login">
+                            <img src="{{ url_for('static', path='assets/icon_user.png') }}" alt="">
+                            <p id="auth-name" class="label-login white">Đăng xuất</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="search">
+            <div class="search-box">
+                <i class="ti-search"></i>
+                <input id="input-search" class="input-search" type="text" placeholder="Từ khoá tìm kiếm">
+            </div>
+        </div>
+        <div id="content">
+            <div class="content">
+                <div class="left-content">
+                    <div class="left-content-nav">
+                        <div class="left-content-nav-title">
+                            <h3 class="white">Menu</h3>
+                        </div>
+                        <div class="left-content-nav-item">
+                            <a class="white" href="/hethong/vanbandi?id={{ canbo.idCanBo }}"><li class="white">Quản lý văn bản đi</li></a>
+                            <a class="white" href="/hethong/vanbanden?id={{ canbo.idCanBo }}" style="background-color: #616469;"><li class="white">Quản lý văn bản đến</li></a>
+                            <a class="white" href=""><li class="white">Đăng ký văn bản đi</li></a>
+                            <a class="white" href=""><li class="white">Xem lịch sử</li></a>
+                            <a class="white" href=""><li class="white">Phân công xử lý</li></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-content">
+                    <div class="title_content_top">
+                        <h2>Nhập mới văn bản đến</h2>
+                    </div>
+                    <div class="title_content_bottom">
+                        <div class="title_content_bottom_child">
+                            <div id = "title_content_bottom_left" >
+                                <h4>Thông tin văn bản</h4>
+                            </div>
+
+                            <div id="title_content_bottom_right">
+                                <h4>Thông tin xử lý</h4>
+                            </div>
+                        </div>
+                        <a class="right-content-top-btn" href="/hethong/vanbanden?id={{ canbo.idCanBo }}">
+                            <h5>Quay lại</h5>
+                            <i class="ti-back-left" style="font-weight: bold;"></i>
+                        </a>
+                    </div>
+                    
+
+                    <div id="right-main-content_1">
+                        
+                        <div class="top-main-content">
+                            <div class="abstract">
+                                <p>Trích yếu<span style="color: red;">*</span></p>
+                                <input class="abstract_input" name="abstract" placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="between-main-content">
+                             <div class="between-main-content-left">
+
+                                
+                                <div class="form">
+                                    <p>Hình thức<span style="color: red;">*</span></p>
+                                    <select id="form_cb" name="form_cb">  
+                                        {% for item in option_hinhthuc %}
+                                        <option class="form-option" id-hinhthucvb="{{ item.idHinhThuc }}" value="{{ item.TenHinhThuc }}" {% if loop.first %} selected {% endif %}>{{ item.TenHinhThuc }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+
+
+                                <div class="issuing_unit">
+                                    <p>Đơn vị ban hành</p>
+                                    <input class="issuing_unit_input" name="issuing_unit" placeholder="">
+                                </div>
+
+                                <div class="incoming_number">
+                                    <p>Số đến<span style="color: red;">*</span></p>
+                                    <input class="incoming_number_input" name="incoming_number" placeholder="">
+                                </div>
+
+
+ 
+
+
+                                <div class="field">
+                                    <p>Lĩnh vực</p>
+                                    <select id="field_cb" name="field_cb">                                       
+                                        {% for item in option_linhvuc %}
+                                        <option class="form-option" id-linhvucvb="{{ item.idLinhVuc }}" value="{{ item.TenLinhVuc }}" {% if loop.first %} selected {% endif %}>{{ item.TenLinhVuc }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+
+                                <div class="textual_properties">
+                                    <p>Tính chất văn bản</p>
+                                    <select id="textual_properties_cb" name="textual_properties_cb">
+                                        {% for item in option_tinhchatvanban %}
+                                        <option class="form-option" id-tinhchatvanban="{{ item.idTinhChatVB }}" value="{{ item.TenTinhChatVB }}" {% if loop.first %} selected {% endif %}>{{ item.TenTinhChatVB }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+
+                                <div class="Department">
+                                    <p>Khoa</p>
+                                    <select id="Department_cb" name="Department_cb">
+                                        {% for item in option_khoa %}
+                                        <option class="form-option" id-Khoa="{{ item.idKhoa }}" value="{{ item.TenKhoa }}" {% if loop.first %} selected {% endif %}>{{ item.TenKhoa }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                        
+
+
+
+                             </div>
+                             <div class="between-main-content_right">
+
+
+                                <div class="day_arrives">
+                    
+                                    <label for="day_arrives_input">Ngày đến</label>
+                                    <input class="input ip-ngayden" type="date" >
+                                </div> 
+                                <div class="day_issued">
+                    
+                                    <label for="day_issued_input">Ngày ban hành</label>
+                                    <input class="input ip-ngaybanhanh" type="date" >
+
+                                </div> 
+    
+    
+    
+                                <div class="symbol_number">
+                                    <p>Số/Ký hiệu<span style="color: red;">*</span></p>
+                                    <input class="symbol_number_input" name="symbol_number" placeholder="">
+                                </div> 
+
+    
+    
+                                <div class="position">
+                                    <p>Cán bộ duyệt</p>
+                                    <select id="position_cb" name="position_cb">
+                                        {% for item in option_nguoiduyet %}
+                                        {% if item.QuyenTruyCap == "Lãnh đạo" %}
+                                        <option class="form-option" id-nguoipheduyet="{{ item.idCanBo }}" value="{{ item.HoTen }}" {% if loop.first %} selected {% endif %}>{{ item.HoTen }}</option>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+    
+    
+                                <div class="Urgency">
+                                    <p>Độ khẩn</p>
+                                    <select id="Urgency_cb" name="Urgency_cb">
+                                        {% for item in option_dokhan %}
+                                        <option class="form-option" id-dokhanvb="{{ item.idDoKhanCap }}" value="{{ item.TenDoKhanCap }}" {% if loop.first %} selected {% endif %}>{{ item.TenDoKhanCap }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <div class="Document_Type">
+                                    <p>Loại Văn Bản</p>
+                                    <select id="Document_Type_cb" name="Document_Type_cb">
+                                        {% for item in option_loaivb %}
+                                        <option class="form-option" id-loaiVB="{{ item.idLoaiVanBan }}" value="{{ item.TenLoaiVanBan }}" {% if loop.first %} selected {% endif %}>{{ item.TenLoaiVanBan }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                             </div>
+
+
+                        </div>
+                        <div class="bottom-main-content">
+                              <div class="importer">
+                                <p>Người nhập: <span style="font-weight: bold;">{{ canbo.HoTen }}</span></p>                          
+                              </div>
+                               
+
+                              <div class="bottom-main-content_cb">
+             
+                                    <div class="need_answer">
+                                        <p>Cần trả lời văn bản đi:</p>
+                                        <input type="radio" name="need_answer" value="Có" id="Yes" checked>
+                                        <label for="Yes">Có</label>
+                                        <input type="radio" name="need_answer" value="Không" id="No">
+                                        <label for="No">Không</label>
+                                    </div>
+
+                                    <div class="need_handle">
+                                        <p>Văn bản cần phải xử lý:</p>
+                                        <input type="radio" name="need_handle" value="Có" id="Yes" checked>
+                                        <label for="Yes">Có</label>
+                                        <input type="radio" name="need_handle" value="Không" id="No">
+                                        <label for="No">Không</label>
+                                    </div>
+
+                              </div>
+                              
+                              <div class="bottom-main-content_end">
+                                    
+                                    <div class="bottom-main-content_end_1">
+                                            
+
+
+                                    <div class="response_deadline">
+                        
+                                        <label for="response_deadline_input">Hạn trả lời</label>
+                                        <input class="input ip-ngaytraloi" type="date" >
+                                    </div> 
+
+
+                                      
+                                        <div class="number_days">
+                                            <p>Số ngày</p>
+                                            <input class="number_days_input" name="number_days" placeholder="">
+                                        </div>
+
+                                            
+                                        <div class="reply_status">
+                                            <p>Trạng thái văn bản</p>
+                                            <select id="reply_status_cb" name="reply_status_cb">
+                                                {% for item in option_trangthaixuly %}
+                                                <option class="form-option" id-trangthaixuly="{{ item.idTrangThai }}" value="{{ item.TenTrangThai }}" {% if loop.first %} selected {% endif %}>{{ item.TenTrangThai }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                      
+
+                                    </div>
+                                    <div class="bottom-main-content_end_2">
+                                        <label for="filevb">File đính kèm</label>
+                                        <input id="filevb" type="file" name="file" accept=".doc, .docx, .pdf">
+                                    </div>
+
+                              </div>
+                               
+                           
+                        </div>
+                        <button id="btn-themmoivbden" class="custom_button_1">LƯU</button>
+                        
+                    </div>
+
+
+                    <div id="right-main-content_2" style="display: none;">
+
+
+                        <div class="leader">
+                            <p>Lãnh đạo</p>
+                            <select id="leader_cb" name="leader_cb">
+                                <option value="">Lãnh đạo</option>
+                                <option value="">Điên điện tử</option>
+                                <option value="">Xây dựng</option>
+                                <option value="">Khác</option>
+                            </select>
+                        </div>
+
+
+                        <div class="leadership_direction">
+                            <p>Chỉ đạo của lãnh đạo</p>
+                            <input class="leadership_direction_input" name="leadership_direction" placeholder="">
+                        </div>
+
+                        <div class="office_leader">
+                            <p>Lãnh đạo văn phòng</p>
+                            <select id="office_leader_cb" name="office_leader_cb">
+                                <option value="">Lãnh đạo văn phòng</option>
+                                <option value="">Điên điện tử</option>
+                                <option value="">Xây dựng</option>
+                                <option value="">Khác</option>
+                            </select>
+                        </div>
+
+
+                        <div class="office_processing">
+                            <p>Xử lý sơ bộ của văn phòng</p>
+                            <input class="office_processing_input" name="office_processing" placeholder="">
+                        </div>
+
+
+
+                        <div class="processing_unit">
+                            <p>Đơn vị xử lý</p>
+                            <select id="processing_unit_cb" name="processing_unit">
+                                <option value="">Đơn vị xử lý</option>
+                                <option value="">Điên điện tử</option>
+                                <option value="">Xây dựng</option>
+                                <option value="">Khác</option>
+                            </select>
+                        </div>
+
+                        <div class="deadline_numerical">
+
+                                <div class="deadline">
+                    
+                                    <label for="deadline_input">Hạn xử lý</label>
+                                    <input type="text" id="deadline_input" placeholder="">
+                                    <span class="ti-calendar" id="calendar-icon_deadline"></span> 
+
+                                </div>  
+
+                                <div class="numerical">
+                                        <p>Bằng số</p>
+                                        <input class="numerical_input" name="numerical" placeholder="">
+                                </div>
+
+
+                        </div>
+
+                        <div class="coordination_Unit">
+                            <p>Đơn vị phối hợp xử lý</p>
+                            <input class="coordination_Unit_input" name="coordination_Unit" placeholder="">
+                        </div>
+
+                        <div class="coordination_person">
+                            <p>Người phối hợp xử lý</p>
+                            <input class="coordination_person_input" name="coordination_person" placeholder="">
+                        </div>
+
+                        <button class="custom_button_2">LƯU</button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="{{ url_for('static', path='scripts/insertVB.js') }}"></script>
+
+    <script src="{{ url_for('static', path='scripts/themmoivanbanden.js') }}"></script>
+</body>
+</html>

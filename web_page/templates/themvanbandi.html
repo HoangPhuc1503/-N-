@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ url_for('static', path='assets/favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/themvanbandi.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='assets/fonts/themify-icons/themify-icons.css') }}">
+
+    <title>Thêm mới văn bản đi</title>
+</head>
+<body>
+    <div id="main">
+        <div id="header">
+            <div class="header">
+                <div class="header-logo">
+                    <img class="logoimg" src="{{ url_for('static', path='assets/logo.png') }}" alt="">
+                </div>
+                <div class="header-content">
+                    <div class="header-content-top">
+                        <div class="header-content-top-left">
+                            <h2 class="white">Đại học đà nẵng</h2>
+                            <h2 style="color: #DA5B5B;">Trường Đại Học Sư Phạm Kỹ Thuật</h2>
+                            <h3 class="white">Hệ thống quản lý văn bản việc ban hành văn bản</h3>
+                        </div>
+                        <div class="header-content-top-right white">
+                            <div class="box-username">
+                                <!-- <label class="label-username">Xin chào </label> -->
+                                <span id="user-name" class="user-name">{{ canbo.HoTen }}</span>
+                                <span class="id-canbo" style="display: none;">{{ canbo.idCanBo }}</span>
+                            </div>
+                            <a class="notification" href="">
+                                <i class="ti-bell white"></i>
+                                <span class="quantity-noti">10</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="header-content-bottom">
+                        <div class="header-content-bottom-nav">
+                            <a class="white" href="/hethong?id={{ canbo.idCanBo }}">Trang chủ</a>
+                            <a class="white" href="/hethong/thongtincanhan?id={{ canbo.idCanBo }}">Thông tin cá nhân</a>
+                            {% if canbo.QuyenTruyCap == "Quản trị viên"  %}
+                            <a class="white" href="/phanquyen?id={{ canbo.idCanBo }}">Phân quyền</a>
+                            {% elif canbo.QuyenTruyCap == "Lãnh đạo"  %}
+                                <a class="white" href="#">Tạo văn bản</a>
+                            {% endif %}
+                                <a class="white" href="#">Thống kê</a>
+                        </div>
+                        <a id="auth-link" class="header-content-bottom-user" href="/login">
+                            <img src="{{ url_for('static', path='assets/icon_user.png') }}" alt="">
+                            <p id="auth-name" class="label-login white">Đăng nhập</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="search">
+            <div class="search-box">
+                <i class="ti-search"></i>
+                <input id="input-search" class="input-search" type="text" placeholder="Từ khoá tìm kiếm">
+            </div>
+        </div>
+        <div id="content">
+            <div class="content">
+                <div class="left-content">
+                    <div class="left-content-nav">
+                        <div class="left-content-nav-title">
+                            <h3 class="white">Menu</h3>
+                        </div>
+                        <div class="left-content-nav-item">
+                            <a class="white" href="/hethong/vanbandi?id={{ canbo.idCanBo }}" style="background-color: #616469;"><li class="white">Quản lý văn bản đi</li></a>
+                            <a class="white" href="/hethong/vanbanden?id={{ canbo.idCanBo }}"><li class="white">Quản lý văn bản đến</li></a>
+                            <a class="white" href=""><li class="white">Đăng ký văn bản đi</li></a>
+                            <a class="white" href=""><li class="white">Xem lịch sử</li></a>
+                            <a class="white" href=""><li class="white">Phân công xử lý</li></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-content">
+                    <div class="right-content-title">
+                        <i class="ti-link white"></i>
+                        <h4 class="white">Quản lý văn bản đi</h4>
+                    </div>
+                    <form class="right-content-form">
+                        <div class="right-content-form-top">
+                            <div class="right-content-form-title">
+                                <i class="ti-plus"></i>
+                                <h5>Nhập mới văn bản đi</h5>
+                            </div>
+                            <a class="right-content-form-btn" href="/hethong/vanbandi?id={{ canbo.idCanBo }}">
+                                <h5>Quay lại</h5>
+                                <i class="ti-back-left" style="font-weight: bold;"></i>
+                            </a>
+                        </div>
+                        <div class="right-content-form-center">
+                            <div class="form-item-box">
+                                <div class="form-item-box-content" style="align-items: start;width: 100%;">
+                                    <label style="font-size: 16px;margin-top: 8px; min-width: 70px;">Trích yếu</label>
+                                    <input class="input ip-trichyeu" type="text" required>
+                                </div>
+                            </div>
+                            <div class="form-item-box">
+                                <div class="form-item-box-left">
+                                    <div class="form-item-box-content">
+                                        <label>Hình thức</label>
+                                        <select class="input ip-hinhthuc">
+                                            {% for item in option_hinhthuc %}
+                                            <option class="form-option" id-hinhthucvb="{{ item.idHinhThuc }}" value="{{ item.TenHinhThuc }}" {% if loop.first %} selected {% endif %}>{{ item.TenHinhThuc }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-item-box-content">
+                                        <label>Lĩnh vực</label>
+                                        <select class="input ip-linhvuc">
+                                            {% for item in option_linhvuc %}
+                                            <option class="form-option" id-linhvucvb="{{ item.idLinhVuc }}" value="{{ item.TenLinhVuc }}" {% if loop.first %} selected {% endif %}>{{ item.TenLinhVuc }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div><div class="form-item-box-content">
+                                        <label>Số đến</label>
+                                        <input class="input ip-soden" type="number" min="0" required>
+                                    </div>
+                                    <div class="form-item-box-content">
+                                        <label>Cán bộ duyệt</label>
+                                        <select class="input ip-nguoipheduyet">
+                                            {% for item in option_nguoipheduyet %}
+                                                {% if item.QuyenTruyCap == "Lãnh đạo" %}
+                                                <option class="form-option" id-nguoipheduyet="{{ item.idCanBo }}" value="{{ item.HoTen }}" {% if loop.first %} selected {% endif %}>{{ item.QuyenTruyCap }} - {{ item.HoTen }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-item-box-content">
+                                        <label>Độ khẩn</label>
+                                        <select class="input ip-dokhan">
+                                            {% for item in option_dokhan %}
+                                            <option class="form-option" id-dokhanvb="{{ item.idDoKhanCap }}" value="{{ item.TenDoKhanCap }}" {% if loop.first %} selected {% endif %}>{{ item.TenDoKhanCap }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-item-box-right">
+                                    <div class="form-item-box-content">
+                                        <label>Ngày phát hành</label>
+                                        <input class="input ip-ngayphathanh" type="date" required>
+                                    </div>
+                                    <div class="form-item-box-content">
+                                        <label>Hạn xử lý</label>
+                                        <input class="input ip-hanxuly" type="date" required>
+                                    </div>
+                                    <div class="form-item-box-content">
+                                        <label>Số / Ký hiệu</label>
+                                        <input class="input ip-sokyhieu" type="text" required>
+                                    </div>
+                                    <div class="form-item-box-content">
+                                        <label>Loại văn bản</label>
+                                        <select class="input ip-loaivanban">
+                                            {% for item in option_loaivb %}
+                                            <option class="form-option" id-loaivb="{{ item.idLoaiVanBan }}" value="{{ item.TenLoaiVanBan }}" {% if loop.first %} selected {% endif %}>{{ item.TenLoaiVanBan }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-item-box-content">
+                                        <label>Trạng thái xử lý</label>
+                                        <select class="input ip-trangthai" style="pointer-events: none;">
+                                            <!-- <option class="form-option" id-loaivb="1" value="Chờ xử lý" selected>Chờ xử lý</option> -->
+                                            {% for item in option_trangthaixuly %}
+                                            <option class="form-option" id-trangthaixuly="{{ item.idTrangThai }}" value="{{ item.TenTrangThai }}" {% if loop.first %} selected {% endif %}>{{ item.TenTrangThai }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-item-box" style="margin-top: 15px;align-items: center;">
+                                
+                                <div class="form-item-box-content">
+                                    <label for="filevb">File đính kèm</label>
+                                    <input id="filevb" type="file" name="file" accept=".doc, .docx, .pdf">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="right-content-form-footer">
+                            
+                        </div>
+                        <div class="function-btn">
+                            <button id="btn-themmoivb" class="btn-themmoivb white" type="button">
+                                <i class="ti-save"></i>
+                                <!-- <button id="btn-themmoivb" class="white" type="button">Lưu</button> -->
+                                Lưu
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', path='scripts/checkLogin.js') }}"></script>
+    <script src="{{ url_for('static', path='scripts/setbtnLoginLogout.js') }}"></script>
+
+    <script src="{{ url_for('static', path='scripts/insertVB.js') }}"></script>
+</body>
+</html>

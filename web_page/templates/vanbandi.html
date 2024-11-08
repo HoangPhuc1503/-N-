@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ url_for('static', path='assets/favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/vanbandi.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='assets/fonts/themify-icons/themify-icons.css') }}">
+    <title>Quản lý văn bản đi</title>
+</head>
+<body>
+    <div id="header">
+        <div class="header">
+            <div class="header-logo">
+                <img class="logoimg" src="{{ url_for('static', path='assets/logo.png') }}" alt="">
+            </div>
+            <div class="header-content">
+                <div class="header-content-top">
+                    <div class="header-content-top-left">
+                        <h2 class="white">Đại học đà nẵng</h2>
+                        <h2 style="color: #DA5B5B;">Trường Đại Học Sư Phạm Kỹ Thuật</h2>
+                        <h3 class="white">Hệ thống quản lý văn bản việc ban hành văn bản</h3>
+                    </div>
+                    <div class="header-content-top-right white">
+                        <div class="box-username">
+                            <!-- <label class="label-username">Xin chào </label> -->
+                            <span id="user-name" class="user-name">{{ canbo.HoTen }}</span>
+                            <span class="id-canbo" style="display: none;">{{ canbo.idCanBo }}</span>
+                        </div>
+                        <a class="notification" href="">
+                            <i class="ti-bell white"></i>
+                            <span class="quantity-noti">10</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="header-content-bottom">
+                    <div class="header-content-bottom-nav">
+                        <a class="color-nav" href="/hethong?id={{ canbo.idCanBo }}">Trang chủ</a>
+                        <a class="white" href="/hethong/thongtincanhan?id={{ canbo.idCanBo }}">Thông tin cá nhân</a>
+                        {% if canbo.QuyenTruyCap == "Quản trị viên"  %}
+                            <a class="white" href="/phanquyen?id={{ canbo.idCanBo }}">Phân quyền</a>
+                        {% elif canbo.QuyenTruyCap == "Lãnh đạo"  %}
+                            <a class="white" href="#">Tạo văn bản</a>
+                        {% endif %}
+                        <a class="white" href="#">Thống kê</a>
+                    </div>
+                    <a id="auth-link" class="header-content-bottom-user">
+                        <img src="{{ url_for('static', path='assets/icon_user.png') }}" alt="">
+                        <p id="auth-name" class="label-login white">Đăng nhập</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="search">
+        <div class="search-box">
+            <i class="ti-search"></i>
+            <input id="input-search" class="input-search" type="text" placeholder="Từ khoá tìm kiếm">
+        </div>
+    </div>
+    <div id="content">
+        <div class="content">
+            <div class="left-content">
+                <div class="left-content-nav">
+                    <div class="left-content-nav-title">
+                        <h3 class="white">Menu</h3>
+                    </div>
+                    <div class="left-content-nav-item">
+                        <a class="white" href="/hethong/vanbandi?id={{ canbo.idCanBo }}" style="background-color: #616469;"><li class="white">Quản lý văn bản đi</li></a>
+                        <a class="white" href="/hethong/vanbanden?id={{ canbo.idCanBo }}"><li class="white">Quản lý văn bản đến</li></a>
+                        <a class="white" href=""><li class="white">Đăng ký văn bản đi</li></a>
+                        <a class="white" href=""><li class="white">Xem lịch sử</li></a>
+                        <a class="white" href=""><li class="white">Phân công xử lý</li></a>
+                    </div>
+                </div>
+            </div>
+            <div class="right-content">
+                <div class="right-content-title">
+                    <i class="ti-link white"></i>
+                    <h4 class="white">Quản lý văn bản đi</h4>
+                </div>
+                <div class="right-content-form">
+                    <div class="right-content-form-top">
+                        <div class="right-content-form-title">
+                            <i class="ti-view-list"></i>
+                            <a href="/hethong/vanbandi?id={{ canbo.idCanBo }}">Danh sách văn bản</a>
+                        </div>
+                        <div class="right-content-form-top-function">
+                            <div class="right-content-form-select">
+                                <p style="color: #616469; font-weight: bold;">Trạng thái văn bản</p>
+                                <select id="reply_status_cb_bd" name="reply_status_cb" style="padding: 5px;cursor: pointer;">                
+                                    <option class="form-option" id-trangthaixuly="101" value="" selected ></option> 
+                                    {% for item in option_trangthaixuly %}                                    
+                                    <option class="form-option" id-trangthaixuly="{{ item.idTrangThai }}" value="{{ item.TenTrangThai }}">{{ item.TenTrangThai }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>  
+                            <form id="search-form" class="frm-search" method="get">
+                                <i class="ti-search"></i>
+                                <input id="input-search" class="input-search" type="text" name="key" placeholder="Tìm kiếm văn bản">
+                                <button class="btn-search" type="submit">Tìm kiếm</button>
+                            </form>
+                            {% if canbo.QuyenTruyCap == "Quản trị viên" %} 
+                            <a class="right-content-form-btn" href="/hethong/vanbandi/insert?id={{ canbo.idCanBo }}">
+                                <img src="{{ url_for('static', path='assets/icons8-plus-24.png') }}" alt="" srcset="">
+                                <h5>Thêm văn bản mới</h5>
+                            </a>
+                            {% endif %}
+                            <div class="button_report">
+                                <a href="/export_excel" class="btn btn-primary" title="Export Excel"><i class="ti-export"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right-content-form-center">
+                        <table class="table-danhsachvb">
+                            <thead>
+                                <tr>
+                                    <th class="td-stt">STT</th>
+                                    <th>Nội dung công việc</th>
+                                    <th>Người nhập</th>
+                                    <th>Loại văn bản</th>
+                                    <th>Ngày nhập</th>
+                                    <th>Hạn xử lý</th>
+                                    <th>Trạng thái</th>
+                                    {% if canbo.QuyenTruyCap == "Quản trị viên" %} 
+                                    <th colspan="2">Tác vụ</th>
+                                    {% endif %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                {% for item in listVB %}
+                                    {% if canbo.QuyenTruyCap == "Quản trị viên"  %}
+                                        <tr id-vanbandi="{{ item.idVanBanDi }}"  onclick="window.location.href='/hethong/vanbandi/chitiet/{{ canbo.idCanBo }}/vb{{ item.idVanBanDi}}'">
+                                            <!-- <td class="td-stt center">{{ item.stt }}</td> -->
+                                            <td class="td-stt auto-increase center"></td>
+                                            <td class="td-content left" style="color: rgb(0, 174, 255);"> {{ item.TrichYeu }}</td>
+                                            <td class="td-username left" style="min-width: 130px;">{{ item.TenNguoiNhap }}</td>
+                                            <td class="td-loaivb left center">{{ item.TenLoaiVanBan }}</td>
+                                            <td class="td-ngaynhap center">{{ item.NgayPhatHanh }}</td>
+                                            <td class="td-hanxuly center">{{ item.HanXuLy }}</td>
+                                            <td class="td-trangthai left" style="min-width: 110px;">{{ item.TenTrangThai }}</td>
+                                           
+                                            <td class="td-btn td-btn-update center">
+                                                <i class="ti-btn-update ti-pencil-alt" updateVanBanDi="{{ item.idVanBanDi }}" onclick="event.stopPropagation();"></i>
+                                            </td>
+                                            <td class="td-btn td-btn-delete center">
+                                                <i class="ti-btn-delete ti-close" deleteVanBanDi="{{ item.idVanBanDi }}" onclick="event.stopPropagation();"></i>
+                                            </td>
+                                        </tr>
+                                    {% elif canbo.QuyenTruyCap == "Lãnh đạo" %}
+                                        {% if canbo.idCanBo == item.idNguoiPheDuyet %}
+                                            <tr id-vanbandi="{{ item.idVanBanDi }}"  onclick="window.location.href='/hethong/vanbandi/chitiet/{{ canbo.idCanBo }}/vb{{ item.idVanBanDi}}'">
+                                                <td class="td-stt auto-increase center"></td>
+                                                <td class="td-content left" style="color: rgb(0, 174, 255);"> {{ item.TrichYeu }}</td>
+                                                <td class="td-username left" style="min-width: 130px;">{{ item.TenNguoiNhap }}</td>
+                                                <td class="td-loaivb left center">{{ item.TenLoaiVanBan }}</td>
+                                                <td class="td-ngaynhap center">{{ item.NgayPhatHanh }}</td>
+                                                <td class="td-hanxuly center">{{ item.HanXuLy }}</td>
+                                                <td class="td-trangthai left" style="min-width: 110px;">{{ item.TenTrangThai }}</td>
+                                            </tr>
+                                        {% endif %}
+                                    {% else %}
+                                        {% if canbo.idCanBo == item.idNguoiPheDuyet %}
+                                            <tr id-vanbandi="{{ item.idVanBanDi }}"  onclick="window.location.href='/hethong/vanbandi/chitiet/{{ canbo.idCanBo }}/vb{{ item.idVanBanDi}}'">
+                                                <td class="td-stt auto-increase center"></td>
+                                                <td class="td-content left" style="color: rgb(0, 174, 255);"> {{ item.TrichYeu }}</td>
+                                                <td class="td-username left" style="min-width: 130px;">{{ item.TenNguoiNhap }}</td>
+                                                <td class="td-loaivb left center">{{ item.TenLoaiVanBan }}</td>
+                                                <td class="td-ngaynhap center">{{ item.NgayPhatHanh }}</td>
+                                                <td class="td-hanxuly center">{{ item.HanXuLy }}</td>
+                                                <td class="td-trangthai left" style="min-width: 110px;">{{ item.TenTrangThai }}</td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('reply_status_cb_bd').addEventListener('mousedown', function() {
+            // Dùng biến để lưu trạng thái tùy chọn đã chọn trước đó
+            var previousOption = this.options[this.selectedIndex];
+        
+            this.addEventListener('change', function() {
+                var selectedOption = this.options[this.selectedIndex];
+                
+                if (selectedOption !== previousOption) {
+                
+                    // Lấy thuộc tính id-trangthaixuly của tùy chọn được chọn
+                    var idTrangThai = selectedOption.getAttribute('id-trangthaixuly');
+                    var idCanBo = document.querySelector('.id-canbo').textContent;
+                    
+                    // Điều hướng đến URL mới dựa trên lựa chọn
+                    window.location.href = `/hethong/vanbandi/statistical/${idCanBo}/${idTrangThai}`;
+                }
+            }, { once: true });
+        });
+    </script>
+
+    <!-- <script src="{{ url_for('static', path='scripts/getUser.js') }}"></script> -->
+    <script src="{{ url_for('static', path='scripts/checkLogin.js') }}"></script>
+    <script src="{{ url_for('static', path='scripts/setbtnLoginLogout.js') }}"></script>
+
+    <script src="{{ url_for('static', path='scripts/deleteVB.js') }}"></script>
+    <script src="{{ url_for('static', path='scripts/updateLink.js') }}"></script>
+    <script src="{{ url_for('static', path='scripts/searchVB.js') }}"></script>
+</body>
+</html>

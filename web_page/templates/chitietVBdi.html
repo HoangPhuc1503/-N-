@@ -1,0 +1,607 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{url_for('static', path='assets/favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/chitietVBdi.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='assets/fonts/themify-icons/themify-icons.css') }}">
+    <title>Chi tiết văn bản đi</title>
+</head>
+<body>
+    <div id="main">
+        <div id="header">
+            <div class="header">
+                <div class="header-logo">
+                    <img class="logoimg" src="{{ url_for('static', path='assets/logo.png') }}" alt="">
+                </div>
+                <div class="header-content">
+                    <div class="header-content-top">
+                        <div class="header-content-top-left">
+                            <h2 class="white">Đại học đà nẵng</h2>
+                            <h2 style="color: #DA5B5B;">Trường Đại Học Sư Phạm Kỹ Thuật</h2>
+                            <h3 class="white">Hệ thống quản lý văn bản việc ban hành văn bản</h3>
+                        </div>
+                        <div class="header-content-top-right white">
+                            <div class="box-username">
+                                <!-- <label class="label-username">Xin chào </label> -->
+                                <span id="user-name" class="user-name">{{ canbo.HoTen }}</span>
+                                <span class="id-canbo" style="display: none;">{{ canbo.idCanBo }}</span>
+                            </div>
+                            <a class="notification" href="">
+                                <i class="ti-bell white"></i>
+                                <span class="quantity-noti">10</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="header-content-bottom">
+                        <div class="header-content-bottom-nav">
+                            <a class="white" href="/hethong?id={{ canbo.idCanBo }}">Trang chủ</a>
+                            <a class="white" href="/hethong/thongtincanhan?id={{ canbo.idCanBo }}">Thông tin cá nhân</a>
+                            {% if canbo.QuyenTruyCap == "Quản trị viên"  %}
+                            <a class="white" href="/phanquyen?id={{ canbo.idCanBo }}">Phân quyền</a>
+                            {% elif canbo.QuyenTruyCap == "Lãnh đạo"  %}
+                                <a class="white" href="#">Tạo văn bản</a>
+                            {% endif %}
+                            <a class="white" href="#">Thống kê</a>
+                        </div>
+                        <a id="auth-link" class="header-content-bottom-user" href="/login">
+                            <img src="{{ url_for('static', path='assets/icon_user.png') }}" alt="">
+                            <p id="auth-name" class="label-login white">Đăng nhập</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="search">
+            <div class="search-box">
+                <i class="ti-search"></i>
+                <input id="input-search" class="input-search" type="text" placeholder="Từ khoá tìm kiếm">
+            </div>
+        </div>
+        <div id="content">
+            <div class="content">
+                <div class="left-content">
+                    <div class="left-content-nav">
+                        <div class="left-content-nav-title">
+                            <h3 class="white">Menu</h3>
+                        </div>
+                        <div class="left-content-nav-item">
+                            <a class="white" href="/hethong/vanbandi?id={{ canbo.idCanBo }}" style="background-color: #616469;"><li class="white">Quản lý văn bản đi</li></a>
+                            <a class="white" href="/hethong/vanbanden?id={{ canbo.idCanBo }}"><li class="white">Quản lý văn bản đến</li></a>
+                            <a class="white" href=""><li class="white">Đăng ký văn bản đi</li></a>
+                            <a class="white" href=""><li class="white">Xem lịch sử</li></a>
+                            <a class="white" href=""><li class="white">Phân công xử lý</li></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-content">
+                    <div class="right-content-title">
+                        <i class="ti-link white"></i>
+                        <h3 class="white">Quản lý văn bản đi</h2>
+                    </div>
+                    <div class="right-content-form">
+                        <div class="right-content-form-top">
+                            <div class="right-content-form-title">
+                                <i class="ti-info"></i>
+                                <h5>Chi tiết văn bản đi</h5>
+                            </div>
+
+                            <div class="right-content-form-title-right">                             
+                                <div class="button_report">
+                                    <a id = "btn-export-filePDF" title="Export PDF"><i class="ti-export"></i></a>
+                                </div>
+                                <a class="right-content-form-btn"  href="/hethong/vanbandi?id={{ canbo.idCanBo }}">
+                                    <h5>Quay lại</h5>
+                                    <i class="ti-back-left" style="font-weight: bold;"></i>
+                                </a>
+                             </div>
+                        </div>
+                        <div class="right-content-form-center">
+                            
+                            <div class="form-chitietvb flex-row">
+                                <div class="form-chitietvb-left flex-col">
+                                    <div class="form-item-box-content" style="align-items: start;">
+                                        <label>Trích yếu: </label>
+                                        <span class="input ip-trichyeu">{{ chitietVB.TrichYeu }}</span>
+                                    </div>
+                                    <div class="form-item-box-content">
+                                        <label>Lãnh đạo phê duyệt: </label>
+                                        <span class="input ip-nguoipheduyet">{{ chitietVB.NguoiPheDuyet }}</span>
+                                    </div>
+                                    <div class="flex-row" style="gap: 50px;">
+                                        <div class="form-item-box-content">
+                                            <label>Số / Ký hiệu: </label>
+                                            <span class="input ip-sokyhieu">{{ chitietVB.SoKyHieu }}</span>
+                                        </div>
+                                        <div class="form-item-box-content">
+                                            <label style="min-width: 60px;">Số đến: </label>
+                                            <span class="input ip-soden">{{ chitietVB.SoDen }}</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-item-box-content">
+                                        <label>Loại văn bản: </label>
+                                        <span class="input ip-loaivanban">{{ chitietVB.TenLoaiVanBan }}</span>
+                                    </div>
+
+                                </div>
+                                <div class="form-chitietvb-right flex-col">
+                                    <div class="form-item-box-content">
+                                        <label>Ngày ban hành: </label>
+                                        <span class="input ip-ngayphathanh">{{ chitietVB.NgayPhatHanh }}</span>
+                                    </div>
+                                    <div class="form-item-box-content">
+                                        <label>Hạn xử lý: </label>
+                                        <span class="input ip-hanxuly">{{ chitietVB.HanXuLy }}</span>
+                                    </div>
+                                    <div class="form-item-box-content">
+                                        <label>Lĩnh vực: </label>
+                                        <span class="input ip-linhvuc">{{ chitietVB.TenLinhVuc }}</span>
+                                    </div>
+                                    <div class="form-item-box-content">
+                                        <label>Cấp độ khẩn: </label>
+                                        <span class="input ip-dokhan">{{ chitietVB.TenDoKhanCap }}</span>
+                                    </div>
+                                    <div class="form-item-box-content" style="display: none;">
+                                        <span class="input ip-filename">{{ chitietVB.LinkFileVanBan }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-chitietvb-functions flex-row">
+                                <button class="btn-xemvb white" onclick="downloadFile('{{ chitietVB.LinkFileVanBan }}')"><i class="ti-eye" style="margin-bottom: 2px;"></i> Xem văn bản</button>
+                                
+                                {% if canbo.QuyenTruyCap == "Lãnh đạo" %} 
+                                    {% if chitietVB.TenTrangThai != "Hoàn thành"  %}
+                                        <button class="btn-share-modal white" ><i class="ti-share" style="margin-bottom: 2px;"></i> Chuyển lãnh đạo khác</button>
+                                        <button class="btn-duyet-modal white"><i class="ti-check" style="margin-bottom: 2px;"></i> Duyệt</button>
+                                    
+                                    {% endif %}
+                                {% elif canbo.QuyenTruyCap == "Văn thư" %} 
+                                    {% if chitietVB.TenTrangThai == "Phối hợp xử lý"  %}
+                                        <button class="btn-xuly-modal white"><i class="ti-check" style="margin-bottom: 2px;"></i>Phối hợp xử lý</button>
+                                    {% endif %}
+                                {% endif %}
+                                <button class="white"><i class="ti-save" style="margin-bottom: 2px;"></i> Lưu vào HSCV</button>
+                            </div>
+                        </div>
+
+                        {% if butpheVBdi %}
+                        <div class="right-content-form-footer">
+                            <div class="right-content-form-footer-title flex-row">
+                                <i class="ti-ink-pen white"></i>
+                                <h3 class="white" style="margin-top: 1px;">Bút phê lãnh đạo</h3>
+                            </div>
+                            
+                            <div class="right-content-form-footer-history flex-col">
+                                {% for item in butpheVBdi %}
+                                    <div class="history-box flex-col" style="gap: 5px;">
+                                        <span class="history-name-chucvu-phongban-date" style="font-size: 16px;font-weight: bold;color: #434447;">
+                                            {{ item.TenNguoiChuyen }} - {{ item.QuyenTruyCapNC }} - {{ item.TenPhongBanNC }} <strong style="color: rgb(53, 149, 245);font-style: italic;">({{ item.ThoiGianChuyen }})</strong>
+                                            <!-- Văn thư - Phòng hành chính - Lưu trữ (19/04/2024 9:01:20) -->
+                                        </span>
+                                        <div class="flex-row" style="gap: 10px;">
+                                            <label style="text-decoration: underline;font-size: 15px;font-weight: bold;">Chuyển:</label>
+                                            <span class="history-name-chucvu-phongban" style="font-size: 15px;margin-top: 1px;">
+                                                {{ item.TenNguoiNhan }} - {{ item.QuyenTruyCapNN }} - {{ item.TenPhongBanNN }}  <span style="color: red;font-style: italic;font-weight: bold;">{{ item.YKienChuyen }}</span>
+                                                <!-- Lãnh đạo - Văn phòng A (Nguyễn Văn A) -->
+                                            </span>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form class="modal js-modal" id-vanban = "{{ chitietVB.idVanBanDi }}">
+        <div class="modal-container flex-row">
+            <div class="modal-container-left flex-col">
+                <header class="container-left-header">Danh sách lãnh đạo</header>
+                <div class="container-left-content">
+                    <div id="modal_lanhdao" class="quyenlanhdao list-check hidden">
+                        <div class="list-check-item">
+                            <label class="has-sub-checkbox">
+                                <i class="ti-control-eject"></i>
+                                <input class="ip-checkboxs" type="checkbox" id="parentCheckbox" onclick="toggleNested('childCheckbox1', this)">
+                                Trường Đại học Sư Phạm Kỹ Thuật
+                            </label> 
+                            <div class="list-check nested" id="childCheckbox1"> 
+                                <div class="list-check-item">
+                                    <label class="has-sub-checkbox">
+                                        <input class="ip-checkboxs" type="checkbox" id="parentKhoaCheckbox" onclick="toggleNested('childCheckbox2', this)">
+                                        Khoa
+                                    </label> 
+                                    <div class=" list-check nested" id="childCheckbox2"> 
+                                        {% for khoa in option_khoa %}
+                                        <div  class="list-check-item">
+                                            <label class="has-sub-checkbox">
+                                                <input class="checkboxs" type="checkbox" id="subCheckbox2-{{ khoa.idKhoa }}" onclick="toggleNested('childCheckbox2-{{ khoa.idKhoa }}', this)">
+                                                {{ khoa.TenKhoa }}
+                                            </label>
+                                            <div class="list-check nested" id="childCheckbox2-{{ khoa.idKhoa }}">
+                                                {% for item in option_nguoipheduyet %}
+                                                    {% if khoa.idKhoa == item.idKhoa and item.idCanBo != canbo.idCanBo %}
+                                                        {% if item.QuyenTruyCap == "Lãnh đạo" %}
+                                                            <div class="list-check-item has-sub-checkbox">
+                                                                <input class="ip-checkboxs" type="checkbox" onchange="updateSelectedCheckboxList(this)">
+                                                                <img width="18" height="18" src="https://img.icons8.com/ultraviolet/40/guest-male.png" alt="guest-male" style="margin-top: -2px"/>
+                                                                <span class="name" id-canboduyet = "{{ item.idCanBo }}">{{ item.HoTen }} - {{ item.QuyenTruyCap }}</span>
+                                                            </div>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="modal_vanthu" class="quyenvanthu list-check hidden">
+                        <div class="list-check-item">
+                            <label class="has-sub-checkbox">
+                                <i class="ti-control-eject"></i>
+                                <input class="ip-checkboxs" type="checkbox" id="parentCheckbox" onclick="toggleNested('childCheckboxVT1', this)">
+                                Trường Đại học Sư Phạm Kỹ Thuật
+                            </label> 
+                            <div class="list-check nested" id="childCheckboxVT1"> 
+                                <div class="list-check-item">
+                                    <label class="has-sub-checkbox">
+                                        <input class="ip-checkboxs" type="checkbox" id="parentKhoaCheckbox" onclick="toggleNested('childCheckboxVT2', this)">
+                                        Khoa
+                                    </label> 
+                                    <div class=" list-check nested" id="childCheckboxVT2"> 
+                                        {% for khoa in option_khoa %}
+                                        <div  class="list-check-item">
+                                            <label class="has-sub-checkbox">
+                                                <input class="checkboxs" type="checkbox" id="subCheckbox2-{{ khoa.idKhoa }}" onclick="toggleNested('childCheckboxVT2-{{ khoa.idKhoa }}', this)">
+                                                {{ khoa.TenKhoa }}
+                                            </label>
+                                            <div class="list-check nested" id="childCheckboxVT2-{{ khoa.idKhoa }}">
+                                                {% for item in option_nguoipheduyet %}
+                                                    {% if khoa.idKhoa == item.idKhoa and item.idCanBo != canbo.idCanBo %}
+                                                        {% if item.QuyenTruyCap == "Văn thư" %}
+                                                            <div class="list-check-item has-sub-checkbox">
+                                                                <input class="ip-checkboxs" type="checkbox" onchange="updateSelectedCheckboxList(this)">
+                                                                <img width="18" height="18" src="https://img.icons8.com/ultraviolet/40/guest-male.png" alt="guest-male" style="margin-top: -2px"/>
+                                                                <span class="name" id-canboduyet = "{{ item.idCanBo }}">{{ item.HoTen }} - {{ item.QuyenTruyCap }}</span>
+                                                            </div>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="modal_giangvien" class="quyengiangvien list-check hidden">
+                        <div class="list-check-item">
+                            <label class="has-sub-checkbox">
+                                <i class="ti-control-eject"></i>
+                                <input class="ip-checkboxs" type="checkbox" id="parentCheckbox" onclick="toggleNested('childCheckboxGV1', this)">
+                                Trường Đại học Sư Phạm Kỹ Thuật
+                            </label> 
+                            <div class="list-check nested" id="childCheckboxGV1"> 
+                                <div class="list-check-item">
+                                    <label class="has-sub-checkbox">
+                                        <input class="ip-checkboxs" type="checkbox" id="parentKhoaCheckbox" onclick="toggleNested('childCheckboxGV2', this)">
+                                        Khoa
+                                    </label> 
+                                    <div class=" list-check nested" id="childCheckboxGV2"> 
+                                        {% for khoa in option_khoa %}
+                                        <div  class="list-check-item">
+                                            <label class="has-sub-checkbox">
+                                                <input class="checkboxs" type="checkbox" id="subCheckbox2-{{ khoa.idKhoa }}" onclick="toggleNested('childCheckboxGV2-{{ khoa.idKhoa }}', this)">
+                                                {{ khoa.TenKhoa }}
+                                            </label>
+                                            <div class="list-check nested" id="childCheckboxGV2-{{ khoa.idKhoa }}">
+                                                {% for item in option_nguoipheduyet %}
+                                                    {% if khoa.idKhoa == item.idKhoa and item.idCanBo != canbo.idCanBo %}
+                                                        {% if item.QuyenTruyCap == "Giảng viên" %}
+                                                            <div class="list-check-item has-sub-checkbox">
+                                                                <input class="ip-checkboxs" type="checkbox" onchange="updateSelectedCheckboxList(this)">
+                                                                <img width="18" height="18" src="https://img.icons8.com/ultraviolet/40/guest-male.png" alt="guest-male" style="margin-top: -2px"/>
+                                                                <span class="name" id-canboduyet = "{{ item.idCanBo }}">{{ item.HoTen }} - {{ item.QuyenTruyCap }}</span>
+                                                            </div>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-container-right flex-col">
+                <div class="container-right-top">
+                    <header class="container-right-header">Thông tin chính</header>
+                    <div class="container-right-content flex-col">
+                        <div class="box-note">
+                            <textarea id="ip-note" class="ip-note" type="text" name="ip-note" placeholder="Ý kiến chuyển"></textarea>
+                 
+                        </div>
+                        <div class="btn-function flex-row">
+                            <button id="btn-share" class="btn-modal btn-share"><i class="ti-share" style="margin-bottom: 2px;"></i>Chuyển</button>
+                            <button id="btn-close-modal" class="btn-modal btn-close-modal flex-row" style="background-color: red;"><i class="ti-close" style="margin-bottom: 2px;font-size: 14px;"></i>Đóng</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-right-bottom">
+                    <header class="container-right-header">Danh sách cán bộ đã chọn</header>
+                    <div class="container-right-content">
+                        <table class="ds-canbo-checked">
+                            <thead>
+                                <tr>
+                                    <th class="stt">stt</th>
+                                    <th>cán bộ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="selected-officers">
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </form>
+    <div class="chitietvb" style="display: none;">
+        <div class="canboduyet-none">{{ chitietVB.idCanBoDuyet }}</div>
+        <div class="idHinhThuc-none">{{ chitietVB.idHinhThuc }}</div>
+        <div class="idLinhVuc-none">{{ chitietVB.idLinhVuc }}</div>
+        <div class="idDoKhanCap-none">{{ chitietVB.idDoKhanCap }}</div>
+        <div class="idLoaiVanBan-none">{{ chitietVB.idLoaiVanBan }}</div>
+        <div class="idNguoiNhap-none">{{ chitietVB.idNguoiNhap }}</div>
+        <div class="HanXuLy-none">{{ chitietVB.HanXuLy }}</div>
+        <div class="TrichYeu-none">{{ chitietVB.TrichYeu }}</div>
+        <div class="SoDen-none">{{ chitietVB.SoDen }}</div>
+        <div class="NgayPhatHanh-none">{{ chitietVB.NgayPhatHanh }}</div>
+        <div class="SoKyHieu-none">{{ chitietVB.SoKyHieu }}</div>
+        <div class="LinkFileVanBan-none">{{ chitietVB.LinkFileVanBan }}</div>
+        <div class="idTrangThai-none">{{ chitietVB.idTrangThai }}</div>
+    </div>
+
+    <script>
+        
+        const shareBtns = document.querySelectorAll('.btn-share-modal')
+        const duyetBtns = document.querySelectorAll('.btn-duyet-modal')
+        const xulyBtns = document.querySelectorAll('.btn-xuly-modal')
+        const modal = document.querySelector('.js-modal')
+        const modalContainer = document.querySelector('.modal-container')
+        const modalClose = document.getElementById('btn-close-modal')
+
+        const quyenShow = document.querySelector('.list-check')
+
+
+        function showShare(){
+            document.querySelector('.quyenlanhdao').classList.remove('hidden');
+            document.querySelector('.quyenvanthu').classList.add('hidden');
+            document.querySelector('.quyengiangvien').classList.add('hidden');
+            modal.classList.add('js-modal-open');
+        }
+        function showDuyet(){
+            document.querySelector('.quyenlanhdao').classList.add('hidden');
+            document.querySelector('.quyenvanthu').classList.remove('hidden');
+            document.querySelector('.quyengiangvien').classList.add('hidden');
+            modal.classList.add('js-modal-open');
+        }
+
+        function showPhxl(){
+            document.querySelector('.quyenlanhdao').classList.add('hidden');
+            document.querySelector('.quyenvanthu').classList.add('hidden');
+            document.querySelector('.quyengiangvien').classList.remove('hidden');
+            modal.classList.add('js-modal-open');
+        }
+
+
+        function closeShareDuyet(){
+            modal.classList.remove('js-modal-open')
+        }
+
+        for (const btn of shareBtns){
+            btn.addEventListener('click', showShare)
+        }
+        
+        for (const duyet of duyetBtns){
+            duyet.addEventListener('click', showDuyet)
+        }
+        for (const phxl of xulyBtns){
+            phxl.addEventListener('click', showPhxl)
+        }
+
+        modalClose.addEventListener('click', closeShareDuyet)
+
+        modal.addEventListener('click', closeShareDuyet)
+
+        modalContainer.addEventListener('click', function(event){
+            event.stopPropagation()
+        })
+    </script>
+    <script>
+        
+        function toggleNested(id, checkbox) {
+            var element = document.getElementById(id);
+            var label = checkbox.parentElement;
+            // var parentUl = element.parentElement.querySelector('.list-check');
+            if (checkbox.checked) {
+                element.style.display = "block";
+                label.classList.add("expanded");
+            } else {
+                element.style.display = "none";
+                label.classList.remove("expanded");
+            }
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectedOfficersTableBody = document.getElementById('selected-officers');
+            const submitButton = document.getElementById('btn-share');
+            let selectedOfficers = [];
+           
+            function updateSelectedCheckboxList(checkbox) {
+                const officerName = checkbox.nextElementSibling.nextElementSibling.textContent.trim();
+                const officerId = checkbox.nextElementSibling.nextElementSibling.getAttribute('id-canboduyet');
+
+                if (checkbox.checked) {
+                    addRowToSelectedOfficers(officerId, officerName);
+                    selectedOfficers.push(officerId);
+                } else {
+                    removeRowFromSelectedOfficers(officerId);
+                    selectedOfficers = selectedOfficers.filter(id => id !== officerId);
+                }
+            }
+
+            function addRowToSelectedOfficers(id, name) {
+                const newRow = document.createElement('tr');
+                newRow.setAttribute('data-id', id);
+                newRow.innerHTML = `
+                    <td>${selectedOfficersTableBody.children.length + 1}</td>
+                    <td>${name}</td>
+                `;
+                selectedOfficersTableBody.appendChild(newRow);
+            }
+
+            function removeRowFromSelectedOfficers(id) {
+                const rows = selectedOfficersTableBody.querySelectorAll('tr');
+                rows.forEach(row => {
+                    if (row.getAttribute('data-id') === id) {
+                        row.remove();
+                    }
+                });
+                updateRowIndices();
+            }
+
+            function updateRowIndices() {
+                const rows = selectedOfficersTableBody.querySelectorAll('tr');
+                rows.forEach((row, index) => {
+                    row.children[0].textContent = index + 1;
+                });
+            }
+
+            function getCurrentDateTime() {
+                const now = new Date();
+                
+                const year = now.getFullYear();
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const day = String(now.getDate()).padStart(2, '0');
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+                
+                return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+            }
+
+            submitButton.addEventListener('click', function(event) {
+                event.preventDefault();
+                if (selectedOfficers.length > 0) {
+                    selectedOfficers.forEach(officerId => {
+
+                        let idvanbandi = document.querySelector('.modal').getAttribute('id-vanban');
+                        let idnguoichuyen = document.querySelector('.id-canbo').textContent;
+                        var thoigianchuyen = getCurrentDateTime();
+                        var ykienchuyen = document.querySelector('.ip-note').value; 
+
+                        var modal_lanhdao = document.getElementById('modal_lanhdao');
+                        var modal_vanthu = document.getElementById('modal_vanthu');
+                        
+
+                        const formData = new FormData();
+                        
+                        formData.append('idNguoiPheDuyet', officerId); 
+                        formData.append('idHinhThuc', document.querySelector('.idHinhThuc-none').textContent);
+                        formData.append('idLinhVuc', document.querySelector('.idLinhVuc-none').textContent);
+                        formData.append('idDoKhanCap', document.querySelector('.idDoKhanCap-none').textContent);
+                        formData.append('idLoaiVanBan', document.querySelector('.idLoaiVanBan-none').textContent);
+                        formData.append('idCanBo', document.querySelector('.idNguoiNhap-none').textContent);
+                        formData.append('HanXuLy', document.querySelector('.HanXuLy-none').textContent);
+                        formData.append('TrichYeu', document.querySelector('.TrichYeu-none').textContent);
+                        formData.append('SoDen', document.querySelector('.SoDen-none').textContent);
+                        formData.append('NgayPhatHanh', document.querySelector('.NgayPhatHanh-none').textContent);
+                        formData.append('SoKyHieu', document.querySelector('.SoKyHieu-none').textContent); 
+                        formData.append('fileVanBan',  document.querySelector('.LinkFileVanBan-none').textContent);
+
+                        if (modal_lanhdao.classList.contains('hidden')) {
+                            formData.append('TrangThaiXuLy', 3);
+                        } else if (modal_vanthu.classList.contains('hidden')) {
+                            formData.append('TrangThaiXuLy', 2);
+                        } 
+
+                        // else if(modal_phxl.classList.contains('hidden')){
+                        //     formData.append('TrangThaiXuLy', 2);
+                        // }
+                        // formData.append('TrangThaiXuLy', 2);
+
+                        formData.append('idNguoiChuyen', idnguoichuyen);
+                        formData.append('ThoiGianChuyen', thoigianchuyen);
+                        formData.append('YKienChuyen', ykienchuyen);    
+                        // formData.append('TrangThaiXuLy', document.querySelector('.idTrangThai-none').textContent);
+
+                        // In ra giá trị để kiểm tra
+                        console.log('idNguoiPheDuyet:', officerId);
+                        console.log('idHinhThuc:', document.querySelector('.idHinhThuc-none').textContent);
+                        console.log('idLinhVuc:', document.querySelector('.idLinhVuc-none').textContent);
+                        console.log('idDoKhanCap:', document.querySelector('.idDoKhanCap-none').textContent);
+                        console.log('idLoaiVanBan:', document.querySelector('.idLoaiVanBan-none').textContent);
+                        console.log('idCanBo:', document.querySelector('.idNguoiNhap-none').textContent);
+                        console.log('HanXuLy:', document.querySelector('.HanXuLy-none').textContent);
+                        console.log('TrichYeu:', document.querySelector('.TrichYeu-none').textContent);
+                        console.log('SoDen:', document.querySelector('.SoDen-none').textContent);
+                        console.log('NgayPhatHanh:', document.querySelector('.NgayPhatHanh-none').textContent);
+                        console.log('SoKyHieu:', document.querySelector('.SoKyHieu-none').textContent);
+                        console.log('fileVanBan:',  document.querySelector('.LinkFileVanBan-none').textContent);
+                        console.log('TrangThaiXuLy:', document.querySelector('.idTrangThai-none').textContent);
+
+
+                        fetch('/hethong/vanbandi/chuyenpheduyet', {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Success:', data);
+                            // alert("Chuyển phê duyệt tới lãnh đạo thành công");
+                            
+                            window.location.href = `/hethong/vanbandi/chitiet/${idnguoichuyen}/vb${idvanbandi}`;
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
+                            // Handle error response
+                        });
+                    });
+                } else {
+                alert("Please select at least one officer.");
+                }
+            });
+            window.updateSelectedCheckboxList = updateSelectedCheckboxList;
+        });
+    </script>
+    
+    <script>
+        function downloadFile(fileUrl) {
+            window.location.href = "/dowloadfile/" + fileUrl;
+        }
+    </script>
+    <script src="{{ url_for('static', path='scripts/checkLogin.js') }}"></script>
+    <script src="{{ url_for('static', path='scripts/setbtnLoginLogout.js') }}"></script>
+
+    <script src="{{ url_for('static', path='scripts/customDate.js') }}"></script>
+    <script src="{{ url_for('static', path='scripts/btnShare.js') }}"></script>
+    <script src="{{ url_for('static', path='scripts/xuatfile.js') }}"></script>
+
+
+</body>
+</html>

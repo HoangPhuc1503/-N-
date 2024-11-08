@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ url_for('static', path='assets/favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/thongtincanhan.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='assets/fonts/themify-icons/themify-icons.css') }}">
+    <title>Thông tin cá nhân</title>
+</head>
+<body>
+    <div id="main">
+        <div id="header">
+            <div class="header">
+                <div class="header-logo">
+                    <img class="logoimg" src="{{ url_for('static', path='assets/logo.png') }}" alt="">
+                </div>
+                <div class="header-content">
+                    <div class="header-content-top">
+                        <div class="header-content-top-left">
+                            <h2 class="white">Đại học đà nẵng</h2>
+                            <h2 style="color: #DA5B5B;">Trường Đại Học Sư Phạm Kỹ Thuật</h2>
+                            <h3 class="white">Hệ thống quản lý văn bản việc ban hành văn bản</h3>
+                        </div>
+                        <div class="header-content-top-right white">
+                            <div class="box-username">
+                                <!-- <label class="label-username">Xin chào</label> -->
+                                <span id="user-name" class="user-name">{{ canbo.HoTen }}</span>
+                                <span class="id-canbo" style="display: none;">{{ canbo.idCanBo }}</span>
+                            </div>
+                            <a class="notification" href="">
+                                <i class="ti-bell white"></i>
+                                <span class="quantity-noti">10</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="header-content-bottom">
+                        <div class="header-content-bottom-nav">
+                            <a class="white" href="/hethong/?id={{ canbo.idCanBo }}">Trang chủ</a>
+                            <a class="color-nav" href="/hethong/thongtincanhan?id={{ canbo.idCanBo }}">Thông tin cá nhân</a>
+                            {% if canbo.QuyenTruyCap == "Quản trị viên"  %}
+                            <a class="white" href="/phanquyen?id={{ canbo.idCanBo }}">Phân quyền</a>
+                            {% elif canbo.QuyenTruyCap == "Lãnh đạo"  %}
+                                <a class="white" href="#">Tạo văn bản</a>
+                            {% endif %}
+                            <a class="white" href="#">Thống kê</a>
+                        </div>
+                        <a id="auth-link" class="header-content-bottom-user" href="/login">
+                            <img src="{{ url_for('static', path='assets/icon_user.png') }}" alt="">
+                            <p id="auth-name" class="label-login white">Đăng xuất</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="search">
+            <div class="search-box">
+                <i class="ti-search"></i>
+                <input id="input-search" class="input-search" type="text" placeholder="Từ khoá tìm kiếm">
+            </div>
+        </div>
+        <div id="content">
+                
+
+            <div class="content_child">
+                <div class="content_top">
+                    <h3>Thông tin cá nhân</h3>
+                </div>
+    
+                <div class="content_bottom">
+    
+                    <div class="content_bottom_left">
+                        <div class="position">
+                            <label id="label-quyen" class="label-quyen">{{ canbo.QuyenTruyCap }}</label>
+                        </div>
+    
+                        <div class="name">
+                            <p>Họ và tên</p>
+                            <input class="name_input" name="name" value="{{ canbo.HoTen }}">
+                           
+                        </div>
+    
+                        <div class="gender">
+                            <p>Giới tính</p>
+                            <input type="radio" name="gender" value="Nam" id="male" {% if canbo.GioiTinh == "Nam" %} checked {% endif %}>
+                            <label for="male">Nam</label>
+                            <input type="radio" name="gender" value="Nữ" id="female" {% if canbo.GioiTinh == "Nữ" %} checked {% endif %}>
+                            <label for="female">Nữ</label>
+                        </div>
+                         
+                        <div class="CCCD">
+                            <p>CCCD</p>
+                            <input class="CCCD_input" name="CCCD" value="{{ canbo.CCCD }}" >
+                        </div>
+    
+                        <div class="Unit">
+                            <p>Đơn vị</p>
+                            <input class="Unit_input" name="Unit" value="{{ canbo.DonVi }}">
+                        </div>
+                        
+                        <div class="Department">
+                            <p>Phòng ban</p>
+                            <input class="Phongban" name="Phongban" value="{{ canbo.PhongBan }}" style="pointer-events: none;">
+                                
+                        </div>
+    
+                    </div>
+    
+                    <div class="content_bottom_right">
+    
+                        <div class="Phone_number">
+                            <p>Số điện thoại</p>
+                            <input class="Phonenumber_input" name="Phonenumber" value="{{ canbo.SDT }}">
+                        </div>
+    
+                        <div class="Email">
+                            <p>Email</p>
+                            <input class="Email_input" name="Email" value="{{ canbo.Email }}">
+                        </div>
+    
+                        <div class="Address">
+                            <p>Địa chỉ</p>
+                            <input class="Address_input" name="Address" value="{{ canbo.DiaChi }}">
+                        </div>
+                        
+                        <div class="Introduce">
+                            <p>Giới thiệu</p>
+                            <input class="Introduce_input" name="Introduce" value="{{ canbo.GioiThieu }}">
+                        </div>
+    
+                    </div>
+                    
+                </div>
+             </div>
+    
+             <button class="custom_button">CẬP NHẬT</button>
+           
+           
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <script src="{{ url_for('static', path='scripts/checkLogin.js') }}"></script>
+    <script src="{{ url_for('static', path='scripts/setbtnLoginLogout.js') }}"></script>
+
+    <script src="{{ url_for('static', path='scripts/updateInfor.js') }}"></script>
+
+</body>
+</html>
