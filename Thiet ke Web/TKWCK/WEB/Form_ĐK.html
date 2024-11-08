@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Kí Tài Khoản</title>
+    <link rel="stylesheet" href="./Form_ĐK.css">
+</head>
+
+<body>
+    <script src="./form_ĐK.js"></script>
+    <div id="div_header">
+        <div id="div_content_header">
+            <div style="display:flex;">
+                <a href="./Trang chủ.html">
+                    <img src="./background_logo.jpg" alt="logo">
+                </a>
+                <div id="tc" style="display: flex; align-items: center; margin-left: 40px;   color: rgb(159, 7, 7);font-size: 20px;">
+                    <h2>Trang Chủ</h2>
+                </div>
+            </div>
+            <a href="#">
+                <h3 style="font-size: 30px;">Cần trợ giúp ?</h3>
+            </a>
+        </div>
+    </div>
+    <div id="div_forms_dk">
+        <div id="form_ĐK" class="form1">
+            <h3 style="margin: 60px auto 20px; font-size: 30px;">Đăng Kí</h3>
+            <form onsubmit="return false">
+                <div class="form-group">
+                    <input id="email" type="email" placeholder=" Nhập email của bạn">
+                </div>
+                <div class="form-group">
+                    <input id="username" type="text" placeholder=" Nhập tên đăng nhập">
+                </div>
+                <div class="form-group">
+                    <input id="password" type="password" placeholder=" Nhập mật khẩu">
+                </div>
+                <button id="button_ĐK" type="submit" class="btn-submit" style="font-size: 20px;" onclick="kiemtra_ĐK()">Đăng Kí Tài Khoản</button>
+            </form>
+            <class class="sign-up" style="color: black">
+                Đã có tài khoản đăng nhập
+                <a class="ĐN_user" href="./Form_ĐN.html" style="color: #fff;"><b>Tại đây</b></a>
+            </class>
+        </div>
+    </div>
+
+</body>
+
+</html>
